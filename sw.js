@@ -1,5 +1,5 @@
 // Garde les fichiers de l'app pour l'ouvrir sans réseau ; la synchro se fait quand le réseau revient.
-const CACHE = 'elan-v1.6.0';
+const CACHE = 'elan-v1.6.1';
 self.addEventListener('install', e => { self.skipWaiting(); e.waitUntil(caches.open(CACHE).then(c => c.addAll(['./', './index.html']))); });
 self.addEventListener('activate', e => e.waitUntil(caches.keys().then(k => Promise.all(k.filter(n => n !== CACHE).map(n => caches.delete(n)))).then(() => self.clients.claim())));
 self.addEventListener('fetch', e => {

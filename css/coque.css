@@ -200,3 +200,5 @@
   .fin-courbe .axe{width:44px}
   .fin-div{height:180px}.fin-div .h,.fin-div .b{height:80px}
 }
+/* iPhone : pas de zoom au double-tap ni au pincement */
+html,body{touch-action:manipulation;-webkit-text-size-adjust:100%;text-size-adjust:100%}

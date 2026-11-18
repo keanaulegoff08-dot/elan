@@ -124,3 +124,8 @@ taches.checkDeadlines(); verifierRappels();
 
 // Version web (iPhone) : l'app reste disponible hors connexion.
 if('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(() => {});
+// iPhone : bloque le zoom au pincement (Safari ignore parfois user-scalable=no).
+['gesturestart', 'gesturechange', 'gestureend'].forEach(t => document.addEventListener(t, e => e.preventDefault(), { passive: false }));
+document.addEventListener('touchmove', e => { if(e.touches && e.touches.length > 1) e.preventDefault(); }, { passive: false });
+let dernierTap = 0;
+document.addEventListener('touchend', e => { const t = Date.now(); if(t - dernierTap < 300 && !e.target.closest('input,textarea,select')) e.preventDefault(); dernierTap = t; }, { passive: false });
