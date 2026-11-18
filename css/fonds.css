@@ -1,0 +1,40 @@
+/* Fonds illustrés : une scène 1600×900 recadrée sans déformation, en couches superposées.
+   Seules transform et opacity sont animées. Trois couches animées au plus par illustration. */
+.fond{position:absolute;inset:0;overflow:hidden;background:var(--fond-teinte,#1b2a3a);contain:strict;pointer-events:none}
+.fond-scene{position:absolute;left:0;top:0;width:1600px;height:900px;transform-origin:0 0}
+.fond-c{position:absolute;inset:0}
+.fond-c svg{position:absolute;left:0;top:0;display:block;overflow:visible}
+
+.fond-c.anim{will-change:transform,opacity;animation-duration:var(--dur,60s);animation-delay:var(--del,0s);animation-timing-function:ease-in-out;animation-iteration-count:infinite;backface-visibility:hidden}
+/* dérive : aller-retour très lent (nuages, brume, voiliers) */
+.a-derive{animation-name:fond-derive}
+@keyframes fond-derive{0%,100%{transform:translate3d(var(--x0,-30px),var(--y0,0px),0)}50%{transform:translate3d(var(--x1,30px),var(--y1,0px),0)}}
+/* souffle : la lumière respire (halos, fenêtres, reflets) */
+.a-souffle{animation-name:fond-souffle}
+@keyframes fond-souffle{0%,100%{opacity:var(--o0,.55)}50%{opacity:var(--o1,1)}}
+/* vogue : dérive et respiration ensemble (aurore, brume lumineuse) */
+.a-vogue{animation-name:fond-vogue}
+@keyframes fond-vogue{0%,100%{transform:translate3d(var(--x0,-20px),var(--y0,0px),0);opacity:var(--o0,.7)}50%{transform:translate3d(var(--x1,20px),var(--y1,0px),0);opacity:var(--o1,1)}}
+/* chute : flocons ou pétales, motif répété sur deux hauteurs pour une boucle sans raccord */
+.a-chute{animation-name:fond-chute;animation-timing-function:linear}
+@keyframes fond-chute{from{transform:translate3d(0,-900px,0)}to{transform:translate3d(0,0,0)}}
+/* traverse : un élément lointain passe très lentement puis s'efface (ferry, télécabine) */
+.a-traverse{animation-name:fond-traverse;animation-timing-function:linear}
+@keyframes fond-traverse{0%{transform:translate3d(var(--x0,0px),var(--y0,0px),0);opacity:0}8%,92%{opacity:1}100%{transform:translate3d(var(--x1,200px),var(--y1,0px),0);opacity:0}}
+
+/* Pause quand la fenêtre n'est pas visible, arrêt sur réglage, respect de « réduire les animations ». */
+.fonds-pause .fond-c.anim,.fond.pause .fond-c.anim{animation-play-state:paused}
+.fond.fige .fond-c.anim{animation:none}
+@media (prefers-reduced-motion:reduce){.fond-c.anim{animation:none!important}}
+
+/* Fondu lent entre deux fonds */
+.fond{opacity:1;transition:opacity var(--fondu,3s) ease-in-out}
+.fond.entre,.fond.sort{opacity:0}
+
+/* Photos personnelles : même traitement pour toutes */
+.a-zoom{animation-name:fond-zoom}
+@keyframes fond-zoom{0%,100%{transform:scale(1) translate3d(0,0,0)}50%{transform:scale(1.07) translate3d(-8px,-6px,0)}}
+.fp-img{position:absolute;inset:0;background-size:cover;background-position:center;filter:saturate(.88) contrast(.96)}
+.fp-teinte{position:absolute;inset:0;background:linear-gradient(160deg,#5B9A90,#8A90D4);mix-blend-mode:soft-light;opacity:.34}
+.fp-degrade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(18,26,30,.30) 0%,rgba(18,26,30,0) 30%,rgba(18,26,30,0) 55%,rgba(18,26,30,.46) 100%)}
+.fp-brume{position:absolute;inset:-10% -20%;background:radial-gradient(60% 34% at 28% 70%,rgba(255,255,255,.20),transparent 70%),radial-gradient(50% 28% at 76% 34%,rgba(255,255,255,.14),transparent 70%)}

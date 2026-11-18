@@ -1,0 +1,94 @@
+/* Mes engagements : chaque promesse est une route, chaque jour une escale, l'arrivée un drapeau. */
+.eng,.eng-mini{--ok:var(--good);--ko:var(--urgent)}
+.eng-resume{margin:10px 0 0;color:var(--ink-2);font-size:14px}
+.eng-resume b{color:var(--ink);font-weight:600}
+.engs{display:grid;grid-template-columns:repeat(auto-fill,minmax(420px,1fr));gap:18px;margin-top:26px}
+
+.eng{position:relative;padding:22px 24px 20px;border-radius:var(--r-l);background:var(--card);border:1px solid var(--bord);box-shadow:var(--shadow);overflow:hidden;
+  -webkit-backdrop-filter:blur(18px) saturate(1.2);backdrop-filter:blur(18px) saturate(1.2)}
+.eng::before{content:"";position:absolute;inset:0 0 auto 0;height:120px;background:radial-gradient(120% 100% at 0 0,color-mix(in srgb,var(--c) 20%,transparent),transparent 70%);pointer-events:none}
+.eng > *{position:relative}
+.eng.avenir{opacity:.82}
+.eng-h{display:flex;align-items:center;gap:10px;font-size:12.5px;color:var(--ink-2)}
+.eng-cat{font-weight:600;color:color-mix(in srgb,var(--c) 70%,var(--ink))}
+.eng-jour{margin-left:auto;font-family:var(--f-titre);font-weight:300;font-size:12px;color:var(--ink-2)}
+.eng-h .icon-btn{opacity:.5}
+.eng:hover .eng-h .icon-btn{opacity:1}
+.eng-t{font-family:var(--f-display);font-weight:400;font-size:30px;line-height:1.1;margin:10px 0 0;text-wrap:balance}
+.eng-why{margin:8px 0 0;color:var(--ink-2);font-size:14px;line-height:1.45;max-width:60ch}
+
+/* la route : une ligne d'escales, reliées par un trait qui se remplit */
+.eng-route{display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));align-items:center;margin:22px 0 4px;position:relative}
+.eng-route::before{content:"";position:absolute;left:calc(50% / var(--n));right:calc(50% / var(--n));top:50%;height:2px;margin-top:-1px;background:repeating-linear-gradient(90deg,var(--line) 0 6px,transparent 6px 11px)}
+.eng-stop{position:relative;justify-self:center;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--plein);border:1.5px solid color-mix(in srgb,var(--c) 45%,var(--line));transition:transform .2s var(--doux),background .2s,border-color .2s}
+.eng-stop i{display:grid;place-items:center}
+.eng-stop svg{width:13px;height:13px;stroke-width:2.6}
+.eng-stop:not(:disabled):hover{transform:scale(1.15)}
+.eng-stop.ok{background:var(--c);border-color:var(--c);color:#fff}
+.eng-stop.ko{background:var(--urgent-soft);border-color:var(--urgent);color:var(--urgent)}
+.eng-stop.oubli{border-style:dashed;border-color:var(--ink-3);background:transparent}
+.eng-stop.futur{background:transparent;border-color:color-mix(in srgb,var(--c) 30%,var(--line))}
+.eng-stop.auj{box-shadow:0 0 0 4px color-mix(in srgb,var(--c) 22%,transparent)}
+.eng-stop.auj.attente{animation:escale 2.8s ease-in-out infinite}
+@keyframes escale{50%{box-shadow:0 0 0 7px color-mix(in srgb,var(--c) 12%,transparent)}}
+@media (prefers-reduced-motion:reduce){.eng-stop.auj.attente{animation:none}}
+.eng-arrivee{justify-self:center;color:var(--ink-3);display:grid;place-items:center}
+.eng-arrivee svg{width:20px;height:20px}
+.eng-arrivee.atteinte{color:var(--c)}
+/* beaucoup de jours (un mois) : escales plus petites */
+.eng-route.moyenne .eng-stop{width:18px;height:18px}
+.eng-route.moyenne .eng-stop svg{width:10px;height:10px}
+.eng-route.longue .eng-stop{width:11px;height:11px;border-width:1.5px}
+.eng-route.longue .eng-stop svg{display:none}
+.eng-route.longue .eng-stop.auj{box-shadow:0 0 0 3px color-mix(in srgb,var(--c) 30%,transparent)}
+.eng-route.compacte{margin:12px 0 0}
+.eng-route.compacte .eng-stop{width:12px;height:12px;border-width:1.5px}
+.eng-route.compacte .eng-stop svg{display:none}
+.eng-route.compacte .eng-arrivee svg{width:15px;height:15px}
+
+.eng-bas{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:14px;font-size:12.5px;color:var(--ink-3)}
+.eng-score{color:var(--ink-2)}
+.eng-score b{font-family:var(--f-titre);font-weight:400;color:var(--ink)}
+.eng-auj{display:flex;align-items:center;gap:8px;margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
+.eng-auj span{flex:1;font-size:13.5px;font-weight:600}
+.choix svg{width:13px;height:13px;vertical-align:-2px;margin-right:4px}
+.choix{display:inline-flex;align-items:center}
+
+/* arrivés */
+.engs-finis{display:flex;flex-direction:column;gap:10px}
+.eng.fini{display:flex;align-items:center;gap:24px;padding:16px 22px}
+.eng.fini::before{height:100%;background:linear-gradient(90deg,color-mix(in srgb,var(--c) 12%,transparent),transparent 50%)}
+.eng-fini-g{flex:1;min-width:0}
+.eng.fini .eng-t{font-size:22px;margin:0}
+.eng-quand{font-size:12.5px;color:var(--ink-3)}
+.eng-fini-d{display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+.eng-res{font-size:13px;color:var(--ink-2)}
+.eng-res b{font-family:var(--f-titre);font-weight:400;color:var(--ink)}
+.eng-badge{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:color-mix(in srgb,var(--c) 75%,var(--ink));padding:5px 12px 5px 10px;border-radius:999px;background:color-mix(in srgb,var(--c) 18%,transparent)}
+.eng-badge svg{width:15px;height:15px}
+
+/* page vide : une invitation, pas un vide */
+.eng-vide{margin-top:30px;padding:34px;border-radius:var(--r-l);background:var(--card);border:1px dashed color-mix(in srgb,var(--accent) 40%,var(--line));text-align:center}
+.eng-vide b{font-family:var(--f-display);font-weight:400;font-size:30px}
+.eng-vide p{color:var(--ink-2);margin:8px auto 18px;max-width:46ch}
+.eng-idees{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.eng-idees .chip{font-size:13px;padding:7px 14px}
+
+/* formulaire */
+.eng-durees{display:flex;flex-wrap:wrap;gap:6px}
+.eng-autre{cursor:text}
+.eng-autre input{width:26px;border:0;background:transparent;outline:none;font:inherit;color:inherit;text-align:right;-moz-appearance:textfield}
+.eng-autre input::-webkit-inner-spin-button{-webkit-appearance:none}
+.eng-autre.on{background:color-mix(in srgb,var(--ink-3) 24%,transparent);color:var(--ink)}
+
+/* sur l'accueil */
+.eng-accueil{margin-top:28px}
+.eng-liste{display:flex;flex-direction:column;gap:8px}
+.eng-mini{display:flex;align-items:center;gap:12px;padding:10px 12px 10px 16px;border-radius:999px;background:var(--card);border:1px solid var(--bord);box-shadow:var(--shadow)}
+.eng-mini .dot{width:9px;height:9px;border-radius:50%;background:var(--c);flex:none}
+.eng-mini p{margin:0;flex:1;min-width:0;display:flex;align-items:baseline;gap:10px}
+.eng-mini b{font-weight:600;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.eng-mini small{color:var(--ink-3);font-size:12px;white-space:nowrap}
+.eng-mini .choix{padding:5px 11px;font-size:12.5px}
+
+@media (max-width:980px){.engs{grid-template-columns:1fr}.eng.fini{flex-direction:column;align-items:stretch}.eng-fini-d{align-items:flex-start}}
